@@ -14,29 +14,30 @@ import {
 } from "./ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Badge } from "./ui/badge";
+import { Switch } from "./ui/switch";
+import { ThemeSwitch } from "./ui/theme-switch";
 import { Logo } from "./ui/logo";
+import { useTheme } from "../contexts/ThemeContext";
+import { cn } from "../lib/utils";
 import {
-  Home,
-  FileText,
   BarChart3,
-  Users,
-  Settings,
-  LogOut,
-  Menu,
-  X,
   Bell,
-  Globe,
-  User,
-  Wrench,
-  Shield,
-  MapPin,
-  MessageSquare,
-  Calendar,
-  TrendingUp,
+  ChevronDown,
   Database,
-  UserCheck,
-  AlertTriangle,
-  PieChart,
+  FileText,
+  Globe,
+  Home,
+  LogOut,
+  MapPin,
+  Menu,
+  Moon,
+  Shield,
+  Sun,
+  TrendingUp,
+  User,
+  Users,
+  Wrench,
+  X,
 } from "lucide-react";
 
 type UserRole =
@@ -63,6 +64,7 @@ const Navigation: React.FC = () => {
   );
   const { notifications } = useAppSelector((state) => state.ui);
   const { appName, appLogoUrl, appLogoSize } = useSystemConfig();
+  const { isDarkMode, toggleDarkMode, uiConfig } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   // Close mobile menu on escape key
@@ -204,23 +206,23 @@ const Navigation: React.FC = () => {
   const getRoleColor = (role: string) => {
     switch (role) {
       case "ADMINISTRATOR":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
       case "WARD_OFFICER":
-        return "bg-blue-100 text-blue-800";
+        return "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200";
       case "MAINTENANCE_TEAM":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "CITIZEN":
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
       case "GUEST":
-        return "bg-purple-100 text-purple-800";
+        return "bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
     }
   };
 
   if (!isAuthenticated) {
     return (
-      <nav className="bg-white shadow-sm border-b fixed top-0 left-0 right-0 z-50">
+      <nav className={cn("shadow-sm border-b fixed top-0 left-0 right-0 z-50", uiConfig.colors.card)}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex items-center">
@@ -256,6 +258,12 @@ const Navigation: React.FC = () => {
 
             {/* Desktop Navigation for unauthenticated users */}
             <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+              {/* Dark Mode Toggle */}
+              <ThemeSwitch
+                checked={isDarkMode}
+                onCheckedChange={toggleDarkMode}
+              />
+              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm">
@@ -314,7 +322,16 @@ const Navigation: React.FC = () => {
               isMobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
             }`}
           >
-            <div className="px-4 pt-3 pb-4 space-y-3 border-t border-gray-200 bg-white/95 shadow-lg backdrop-blur-md">
+            <div className={cn("px-4 pt-3 pb-4 space-y-3 border-t shadow-lg backdrop-blur-md", uiConfig.colors.card, uiConfig.colors.border)}>
+              {/* Dark Mode Toggle */}
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-sm font-medium text-foreground">Dark Mode</span>
+                <ThemeSwitch
+                  checked={isDarkMode}
+                  onCheckedChange={toggleDarkMode}
+                />
+              </div>
+              
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button
@@ -377,7 +394,7 @@ const Navigation: React.FC = () => {
   }
 
   return (
-    <nav className="bg-white shadow-sm border-b fixed top-0 left-0 right-0 z-50">
+    <nav className={cn("shadow-sm border-b fixed top-0 left-0 right-0 z-50", uiConfig.colors.card)}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
@@ -413,6 +430,12 @@ const Navigation: React.FC = () => {
 
           {/* User Menu */}
           <div className="hidden md:flex items-center space-x-2 lg:space-x-4">
+            {/* Dark Mode Toggle */}
+            <ThemeSwitch
+              checked={isDarkMode}
+              onCheckedChange={toggleDarkMode}
+            />
+
             {/* Notifications */}
             {false && (
               <DropdownMenu>
@@ -440,7 +463,7 @@ const Navigation: React.FC = () => {
                       {translations?.auth?.notifications || "Notifications"}
                     </h3>
                     {notifications.length === 0 ? (
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         {translations?.common?.noData || "No notifications"}
                       </p>
                     ) : (
@@ -448,13 +471,13 @@ const Navigation: React.FC = () => {
                         <div
                           key={notification.id}
                           className={`p-2 rounded-md mb-2 ${
-                            notification.isRead ? "bg-gray-50" : "bg-blue-50"
+                            notification.isRead ? "bg-muted/50" : "bg-blue-50 dark:bg-blue-950"
                           }`}
                         >
                           <p className="text-sm font-medium">
                             {notification.title}
                           </p>
-                          <p className="text-xs text-gray-600">
+                          <p className="text-xs text-muted-foreground">
                             {notification.message}
                           </p>
                         </div>
@@ -494,45 +517,69 @@ const Navigation: React.FC = () => {
               <DropdownMenuTrigger asChild>
                 <Button
                   variant="ghost"
-                  className="flex items-center space-x-2"
+                  className="flex items-center space-x-3 h-auto py-2 px-3 hover:bg-accent"
                   size="sm"
                 >
-                  <Avatar className="h-8 w-8">
-                    <AvatarImage src={user?.avatar} />
-                    <AvatarFallback>
+                  <Avatar className="h-9 w-9 ring-2 ring-border">
+                    <AvatarImage src={user?.avatar} alt={user?.fullName} />
+                    <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
                       {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="hidden lg:block text-left">
-                    <p className="text-sm font-medium">{user?.fullName}</p>
+                  <div className="hidden lg:flex flex-col items-start min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate max-w-32">
+                      {user?.fullName || "User"}
+                    </p>
                     <Badge
+                      variant="secondary"
                       className={`text-xs ${getRoleColor(user?.role || "")}`}
                     >
-                      {user?.role?.replace("_", " ")}
+                      {user?.role?.replace("_", " ") || "User"}
                     </Badge>
                   </div>
+                  <ChevronDown className="h-4 w-4 text-muted-foreground hidden lg:block" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="w-56">
+                {/* User Info Header */}
+                <div className="flex items-center space-x-3 p-3 border-b border-border">
+                  <Avatar className="h-10 w-10">
+                    <AvatarImage src={user?.avatar} alt={user?.fullName} />
+                    <AvatarFallback className="bg-primary text-primary-foreground">
+                      {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground truncate">
+                      {user?.fullName || "User"}
+                    </p>
+                    <p className="text-xs text-muted-foreground truncate">
+                      {user?.email || "No email"}
+                    </p>
+                    <Badge
+                      variant="outline"
+                      className={`text-xs mt-1 ${getRoleColor(user?.role || "")}`}
+                    >
+                      {user?.role?.replace("_", " ") || "User"}
+                    </Badge>
+                  </div>
+                </div>
+                
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="flex items-center">
-                    <User className="h-4 w-4 mr-2" />
-                    {translations?.nav?.profile || "Profile"}
+                    <User className="h-4 w-4 mr-3" />
+                    <span>{translations?.nav?.profile || "Profile"}</span>
                   </Link>
                 </DropdownMenuItem>
-                {/* <DropdownMenuItem asChild>
-                  <Link to="/settings" className="flex items-center">
-                    <Settings className="h-4 w-4 mr-2" />
-                    {translations.nav.settings}
-                  </Link>
-                </DropdownMenuItem> */}
+                
                 <DropdownMenuSeparator />
+                
                 <DropdownMenuItem
                   onClick={handleLogout}
-                  className="text-red-600"
+                  className="text-destructive focus:text-destructive"
                 >
-                  <LogOut className="h-4 w-4 mr-2" />
-                  {translations.nav.logout}
+                  <LogOut className="h-4 w-4 mr-3" />
+                  <span>{translations.nav.logout}</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -546,7 +593,16 @@ const Navigation: React.FC = () => {
           isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="px-4 pt-3 pb-4 space-y-2 border-t border-gray-200 bg-white/95 shadow-lg backdrop-blur-md">
+        <div className={cn("px-4 pt-3 pb-4 space-y-2 border-t shadow-lg backdrop-blur-md", uiConfig.colors.card, uiConfig.colors.border)}>
+          {/* Dark Mode Toggle */}
+          <div className="flex items-center justify-between mb-4 pb-2 border-b border-border">
+            <span className="text-sm font-medium text-foreground">Dark Mode</span>
+            <ThemeSwitch
+              checked={isDarkMode}
+              onCheckedChange={toggleDarkMode}
+            />
+          </div>
+
           {/* Mobile Navigation Items */}
           <div className="space-y-1 mb-4">
             {filteredNavItems.map((item) => (
@@ -556,7 +612,7 @@ const Navigation: React.FC = () => {
                 className={`block px-3 py-2 rounded-md text-base font-medium transition-colors ${
                   location.pathname === item.path
                     ? "bg-primary text-primary-foreground"
-                    : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 }`}
                 onClick={() => setIsMobileMenuOpen(false)}
               >
@@ -579,7 +635,7 @@ const Navigation: React.FC = () => {
           {/* Mobile Language Selector */}
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <button className="block w-full px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100">
+              <button className="block w-full px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent">
                 <div className="flex items-center space-x-3">
                   <Globe className="h-4 w-4" />
                   <span>Language: {currentLanguage.toUpperCase()}</span>
@@ -599,42 +655,54 @@ const Navigation: React.FC = () => {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          {/* Mobile user menu items */}
-          <div className="border-t border-gray-200 pt-3">
-            <Link
-              to="/profile"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <div className="flex items-center space-x-3">
-                <User className="h-4 w-4" />
+          {/* Mobile user profile section */}
+          <div className="border-t border-border pt-4">
+            {/* User Info */}
+            <div className="flex items-center space-x-3 px-3 py-2 mb-3">
+              <Avatar className="h-12 w-12 ring-2 ring-border">
+                <AvatarImage src={user?.avatar} alt={user?.fullName} />
+                <AvatarFallback className="bg-primary text-primary-foreground font-semibold">
+                  {user?.fullName?.charAt(0)?.toUpperCase() || "U"}
+                </AvatarFallback>
+              </Avatar>
+              <div className="flex-1 min-w-0">
+                <p className="text-sm font-medium text-foreground truncate">
+                  {user?.fullName || "User"}
+                </p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {user?.email || "No email"}
+                </p>
+                <Badge
+                  variant="outline"
+                  className={`text-xs mt-1 ${getRoleColor(user?.role || "")}`}
+                >
+                  {user?.role?.replace("_", " ") || "User"}
+                </Badge>
+              </div>
+            </div>
+
+            {/* Menu Items */}
+            <div className="space-y-1">
+              <Link
+                to="/profile"
+                className="flex items-center space-x-3 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User className="h-5 w-5" />
                 <span>{translations?.nav?.profile || "Profile"}</span>
-              </div>
-            </Link>
-            {/*
-            <Link
-              to="/settings"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              <div className="flex items-center space-x-3">
-                <Settings className="h-4 w-4" />
-                <span>{translations.nav.settings}</span>
-              </div>
-            </Link>
-            */}
-            <button
-              onClick={() => {
-                handleLogout();
-                setIsMobileMenuOpen(false);
-              }}
-              className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-red-600 hover:bg-red-50"
-            >
-              <div className="flex items-center space-x-3">
-                <LogOut className="h-4 w-4" />
+              </Link>
+              
+              <button
+                onClick={() => {
+                  handleLogout();
+                  setIsMobileMenuOpen(false);
+                }}
+                className="flex items-center space-x-3 w-full text-left px-3 py-2 rounded-md text-base font-medium text-destructive hover:bg-destructive/10 transition-colors"
+              >
+                <LogOut className="h-5 w-5" />
                 <span>{translations.nav.logout}</span>
-              </div>
-            </button>
+              </button>
+            </div>
           </div>
         </div>
       </div>

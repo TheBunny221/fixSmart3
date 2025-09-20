@@ -183,7 +183,7 @@ export default function StatusOverviewGrid({
               }
             }}
             className={[
-              "group relative cursor-pointer select-none rounded-2xl border bg-white shadow-sm transition-all",
+              "group relative cursor-pointer select-none rounded-2xl border bg-card shadow-sm transition-all",
               "hover:shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2",
               active
                 ? `ring-2 ${style.ring} ${style.bgSoft} border-transparent`

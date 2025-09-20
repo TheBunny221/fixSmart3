@@ -16,6 +16,7 @@ import AuthErrorHandler from "./components/AuthErrorHandler";
 import UnifiedLayout from "./components/layouts/UnifiedLayout";
 import OtpProvider from "./contexts/OtpContext";
 import { SystemConfigProvider } from "./contexts/SystemConfigContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import RoleBasedRoute from "./components/RoleBasedRoute";
 import RoleBasedDashboard from "./components/RoleBasedDashboard";
 import { Loader2 } from "lucide-react";
@@ -116,12 +117,13 @@ const App: React.FC = () => {
   return (
     <Provider store={store}>
       <ErrorBoundary>
-        <SystemConfigProvider>
-          <AppInitializer>
-            <OtpProvider>
-              <TooltipProvider>
+        <ThemeProvider>
+          <SystemConfigProvider>
+            <AppInitializer>
+              <OtpProvider>
+                <TooltipProvider>
                 <Router>
-                  <div className="min-h-screen bg-gray-50">
+                  <div className="min-h-screen bg-background text-foreground">
                     {/* Keep the outer UI immediate; scope Suspense to each route */}
                     <Routes>
                       {/* Public routes */}
@@ -514,6 +516,7 @@ const App: React.FC = () => {
             </OtpProvider>
           </AppInitializer>
         </SystemConfigProvider>
+      </ThemeProvider>
       </ErrorBoundary>
     </Provider>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import Navigation from "../Navigation";
 import SimplifiedSidebarNav from "../ui/simplified-sidebar-nav";
 import { useAppSelector } from "../../store/hooks";
+import { useTheme } from "../../contexts/ThemeContext";
 import { cn } from "../../lib/utils";
 
 interface UnifiedLayoutProps {
@@ -15,9 +16,10 @@ export const UnifiedLayout: React.FC<UnifiedLayoutProps> = ({
 }) => {
   const { isSidebarCollapsed } = useAppSelector((state) => state.ui);
   const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const { uiConfig } = useTheme();
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={cn("min-h-screen", uiConfig.colors.background)}>
       {/* Top Navigation - Fixed */}
       <Navigation />
 

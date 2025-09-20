@@ -95,7 +95,7 @@ const StatusTracker: React.FC<StatusTrackerProps> = ({
           <CardTitle className="text-sm">Status History</CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-sm text-gray-500">No status updates available</p>
+          <p className="text-sm text-muted-foreground">No status updates available</p>
         </CardContent>
       </Card>
     );
@@ -118,10 +118,10 @@ const StatusTracker: React.FC<StatusTrackerProps> = ({
         <ScrollArea className="h-64">
           <div className="space-y-3">
             {updatesToShow.length === 0 ? (
-              <p className="text-sm text-gray-500">No updates available</p>
+              <p className="text-sm text-muted-foreground">No updates available</p>
             ) : (
               updatesToShow.map((update, index) => (
-                <div key={update.id || index} className="flex items-start space-x-3 p-2 rounded-lg bg-gray-50">
+                <div key={update.id || index} className="flex items-start space-x-3 p-2 rounded-lg bg-muted/50">
                   <div className="flex-shrink-0 mt-1">
                     {getStatusIcon(update.status)}
                   </div>
@@ -130,12 +130,12 @@ const StatusTracker: React.FC<StatusTrackerProps> = ({
                       <Badge className={`text-xs ${getStatusColor(update.status)}`}>
                         {update.status.replace('_', ' ')}
                       </Badge>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-muted-foreground">
                         {formatTimestamp(update.timestamp)}
                       </span>
                     </div>
                     {!complaintId && (
-                      <p className="text-xs text-gray-600 mt-1">
+                      <p className="text-xs text-muted-foreground mt-1">
                         Complaint #{update.complaintId?.slice(-6)}
                       </p>
                     )}
@@ -153,7 +153,7 @@ const StatusTracker: React.FC<StatusTrackerProps> = ({
         
         {showAll && recentUpdates.length > maxItems && (
           <div className="mt-3 text-center">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Showing {Math.min(maxItems, updatesToShow.length)} of {recentUpdates.length} updates
             </p>
           </div>
@@ -191,18 +191,18 @@ export const ActiveComplaintsTracker: React.FC = () => {
           {statusCounts.map(({ status, label, color }) => {
             const count = getComplaintCount(status);
             return (
-              <div key={status} className="text-center p-3 rounded-lg bg-gray-50">
+              <div key={status} className="text-center p-3 rounded-lg bg-muted/50">
                 <div className={`inline-flex px-2 py-1 rounded-full text-xs font-medium ${color} mb-1`}>
                   {label}
                 </div>
-                <div className="text-lg font-semibold text-gray-900">{count}</div>
+                <div className="text-lg font-semibold text-foreground">{count}</div>
               </div>
             );
           })}
         </div>
         <div className="mt-4 pt-3 border-t">
           <div className="flex justify-between text-sm">
-            <span className="text-gray-600">Total Active:</span>
+            <span className="text-muted-foreground">Total Active:</span>
             <span className="font-medium">{activeComplaints.length}</span>
           </div>
         </div>

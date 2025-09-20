@@ -144,7 +144,7 @@ const OtpVerificationModal: React.FC<OtpVerificationModalProps> = ({
                 autoComplete="one-time-code"
                 autoFocus
               />
-              <p className="text-xs text-gray-500 mt-1">
+              <p className="text-xs text-muted-foreground mt-1">
                 Enter the 6-digit code from your email
               </p>
             </div>
@@ -152,8 +152,8 @@ const OtpVerificationModal: React.FC<OtpVerificationModalProps> = ({
             {/* Timer */}
             <div className="flex items-center justify-between text-sm">
               <div className="flex items-center space-x-2">
-                <Clock className="h-4 w-4 text-gray-500" />
-                <span className="text-gray-600">
+                <Clock className="h-4 w-4 text-muted-foreground" />
+                <span className="text-muted-foreground">
                   Code expires in: {formatTime(timeLeft)}
                 </span>
               </div>
@@ -213,7 +213,7 @@ const OtpVerificationModal: React.FC<OtpVerificationModalProps> = ({
 
           {/* Help Text */}
           <div className="text-center">
-            <p className="text-xs text-gray-500">
+            <p className="text-xs text-muted-foreground">
               Didn't receive the code?{" "}
               {canResend ? (
                 <button

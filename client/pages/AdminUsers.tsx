@@ -45,6 +45,7 @@ import {
   Settings,
   Loader2,
   AlertTriangle,
+  Download,
 } from "lucide-react";
 import {
   useLazyGetAllUsersQuery,
@@ -258,6 +259,81 @@ const AdminUsers: React.FC = () => {
           variant: "destructive",
         });
       }
+    }
+  };
+
+  const handleExportUsers = async () => {
+    try {
+      // Get all users without pagination for export
+      const allUsersResponse = await getAllUsers({
+        page: 1,
+        limit: 1000, // Large limit to get all users
+        role: roleFilter !== "all" ? roleFilter : undefined,
+        status: statusFilter,
+      }).unwrap();
+
+      const allUsers = allUsersResponse?.data?.users || [];
+      
+      if (allUsers.length === 0) {
+        toast({
+          title: "No Data",
+          description: "No users found to export",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      // Prepare data for Excel export
+      const exportData = allUsers.map((user) => ({
+        "Full Name": user.fullName,
+        "Email": user.email,
+        "Phone Number": user.phoneNumber || "N/A",
+        "Role": user.role.replace("_", " "),
+        "Ward": user.ward?.name || "No ward assigned",
+        "Department": user.department || "N/A",
+        "Status": user.isActive ? "Active" : "Inactive",
+        "Submitted Complaints": user._count?.submittedComplaints || 0,
+        "Assigned Complaints": user._count?.assignedComplaints || 0,
+        "Created Date": user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A",
+        "Last Updated": user.updatedAt ? new Date(user.updatedAt).toLocaleDateString() : "N/A",
+      }));
+
+      // Create CSV content
+      const headers = Object.keys(exportData[0] || {});
+      const csvContent = [
+        headers.join(","),
+        ...exportData.map(row => 
+          headers.map(header => {
+            const value = row[header as keyof typeof row];
+            // Escape commas and quotes in CSV
+            return typeof value === 'string' && (value.includes(',') || value.includes('"')) 
+              ? `"${value.replace(/"/g, '""')}"` 
+              : String(value);
+          }).join(",")
+        )
+      ].join("\n");
+
+      // Create and download file
+      const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+      const link = document.createElement("a");
+      const url = URL.createObjectURL(blob);
+      link.setAttribute("href", url);
+      link.setAttribute("download", `users_export_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = "hidden";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      toast({
+        title: "Export Successful",
+        description: `Exported ${allUsers.length} users to CSV file`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Export Failed",
+        description: error?.data?.message || "Failed to export users",
+        variant: "destructive",
+      });
     }
   };
 
@@ -729,24 +805,27 @@ const AdminUsers: React.FC = () => {
         </CardContent>
       </Card>
 
-      {/* Quick Actions */}
+      {/* Export Action */}
       <Card>
         <CardHeader>
-          <CardTitle>User Management Actions</CardTitle>
+          <CardTitle>Export Users</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-            <Button variant="outline" className="w-full">
-              Export Users
-            </Button>
-            <Button variant="outline" className="w-full">
-              Bulk Import
-            </Button>
-            <Button variant="outline" className="w-full">
-              User Reports
-            </Button>
-            <Button variant="outline" className="w-full">
-              Access Logs
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-muted-foreground mb-2">
+                Export user data to CSV file with all details including roles, wards, and complaint statistics.
+              </p>
+              <p className="text-xs text-muted-foreground">
+                Current filters will be applied to the export: {roleFilter !== "all" ? `Role: ${roleFilter}` : "All roles"}, {statusFilter !== "all" ? `Status: ${statusFilter}` : "All statuses"}
+              </p>
+            </div>
+            <Button 
+              onClick={handleExportUsers}
+              className="ml-4"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Export to CSV
             </Button>
           </div>
         </CardContent>

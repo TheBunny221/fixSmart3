@@ -73,7 +73,7 @@ export const Logo: React.FC<ExtendedLogoProps> = ({
           <span
             className={cn(
               getTextLogoClasses(size, false),
-              "text-gray-900 hidden sm:inline",
+              "text-foreground hidden sm:inline",
             )}
           >
             {appName}
@@ -83,7 +83,7 @@ export const Logo: React.FC<ExtendedLogoProps> = ({
           <span
             className={cn(
               getTextLogoClasses(size, true),
-              "text-gray-900 sm:hidden",
+              "text-foreground sm:hidden",
             )}
           >
             {appName

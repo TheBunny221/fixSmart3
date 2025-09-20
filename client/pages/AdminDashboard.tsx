@@ -195,21 +195,15 @@ const AdminDashboard: React.FC = () => {
   const getActivityIcon = (type: string) => {
     switch (type) {
       case "complaint":
-        return <FileText className="h-4 w-4 text-blue-600" />;
-      case "resolution":
-        return <CheckCircle className="h-4 w-4 text-green-600" />;
-      case "assignment":
-        return <UserCheck className="h-4 w-4 text-orange-600" />;
-      case "login":
-        return <UserCheck className="h-4 w-4 text-blue-600" />;
-      case "user_created":
-        return <Users className="h-4 w-4 text-purple-600" />;
+        return <FileText className="h-4 w-4 text-blue-600 dark:text-blue-400" />;
       case "user":
-        return <Users className="h-4 w-4 text-purple-600" />;
+        return <Users className="h-4 w-4 text-green-600 dark:text-green-400" />;
+      case "system":
+        return <Settings className="h-4 w-4 text-purple-600 dark:text-purple-400" />;
       case "alert":
-        return <AlertTriangle className="h-4 w-4 text-red-600" />;
+        return <AlertTriangle className="h-4 w-4 text-red-600 dark:text-red-400" />;
       default:
-        return <Activity className="h-4 w-4 text-gray-600" />;
+        return <Activity className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -702,33 +696,33 @@ const AdminDashboard: React.FC = () => {
                     {recentActivity.map((activity) => (
                       <div
                         key={activity.id}
-                        className="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg"
+                        className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg border border-border hover:bg-muted/70 transition-colors"
                       >
                         {getActivityIcon(activity.type)}
                         <div className="flex-1">
                           <div className="flex items-center justify-between">
-                            <p className="text-sm font-medium">
+                            <p className="text-sm font-medium text-foreground">
                               {activity.message}
                             </p>
-                            <span className="text-[10px] uppercase tracking-wide text-gray-400">
+                            <span className="text-[10px] uppercase tracking-wide text-muted-foreground font-medium">
                               {activity.type}
                             </span>
                           </div>
                           {activity.user && (
-                            <p className="text-xs text-gray-600">
+                            <p className="text-xs text-muted-foreground">
                               {activity.user.name}
                               {activity.user.email ? (
                                 <>
                                   {" "}
                                   ·{" "}
-                                  <span className="text-gray-500">
+                                  <span className="text-muted-foreground/80">
                                     {activity.user.email}
                                   </span>
                                 </>
                               ) : null}
                             </p>
                           )}
-                          <p className="text-xs text-gray-500">
+                          <p className="text-xs text-muted-foreground">
                             {activity.time}
                           </p>
                         </div>
@@ -736,8 +730,11 @@ const AdminDashboard: React.FC = () => {
                     ))}
                   </div>
                 ) : (
-                  <div className="h-[200px] flex items-center justify-center text-gray-500">
-                    No recent activity available
+                  <div className="h-[200px] flex items-center justify-center text-muted-foreground">
+                    <div className="text-center">
+                      <Activity className="h-12 w-12 mx-auto mb-2 text-muted-foreground/50" />
+                      <p>No recent activity available</p>
+                    </div>
                   </div>
                 )}
               </CardContent>

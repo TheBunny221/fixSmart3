@@ -471,9 +471,9 @@ const CitizenComplaintForm: React.FC = () => {
         </div>
 
         {/* Citizen Info Alert */}
-        <Alert className="border-blue-200 bg-blue-50">
+        <Alert className="border-blue-200 bg-blue-50 dark:border-blue-800 dark:bg-blue-950">
           <UserCheck className="h-4 w-4" />
-          <AlertDescription className="text-blue-800">
+          <AlertDescription className="text-blue-800 dark:text-blue-200">
             <strong>Logged in as:</strong> {user.fullName} ({user.email})
             <br />
             Your personal information is automatically filled and cannot be
@@ -884,8 +884,8 @@ const CitizenComplaintForm: React.FC = () => {
                   </div>
 
                   {currentLocation && (
-                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
-                      <div className="flex items-center gap-2 text-green-700">
+                    <div className="bg-green-50 dark:bg-green-950 p-4 rounded-lg border border-green-200 dark:border-green-800">
+                      <div className="flex items-center gap-2 text-green-700 dark:text-green-300">
                         <MapPin className="h-4 w-4" />
                         <span className="text-sm font-medium">
                           Current location detected and will be included with
@@ -930,7 +930,7 @@ const CitizenComplaintForm: React.FC = () => {
                     />
                     <Label
                       htmlFor="file-upload"
-                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-gray-300 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
+                      className="flex flex-col items-center justify-center w-full h-32 border-2 border-dashed border-input rounded-lg cursor-pointer bg-muted hover:bg-muted/80"
                     >
                       <div className="flex flex-col items-center justify-center pt-5 pb-6">
                         <Upload className="w-8 h-8 mb-2 text-gray-500" />

@@ -58,18 +58,18 @@ const Index: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800">
       {/* Hero Section */}
-      <div className="bg-white shadow-sm">
+      <div className="bg-card shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="text-center">
             <div className="flex items-center justify-center mb-4">
               <Shield className="h-12 w-12 text-primary mr-3" />
-              <h1 className="text-4xl font-bold text-gray-900">
+              <h1 className="text-4xl font-bold text-foreground">
                 {translations?.nav?.home || `${appName} Portal`}
               </h1>
             </div>
-            <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto">
+            <p className="text-lg text-muted-foreground mb-8 max-w-3xl mx-auto">
               {translations?.guest?.guestSubmissionDescription ||
                 `Welcome to the ${appName} Complaint Management System. Submit civic issues, track progress, and help build a better city together.`}
             </p>

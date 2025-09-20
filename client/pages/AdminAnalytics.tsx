@@ -122,8 +122,8 @@ const AdminAnalytics: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">System Analytics</h1>
-          <p className="text-gray-600">Comprehensive analytics and insights</p>
+          <h1 className="text-3xl font-bold text-foreground">System Analytics</h1>
+          <p className="text-muted-foreground">Comprehensive analytics and insights</p>
         </div>
         <div className="flex space-x-2">
           <Button variant="outline">
@@ -143,7 +143,7 @@ const AdminAnalytics: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Total Complaints
                 </p>
                 <p className="text-2xl font-bold">1,247</p>
@@ -157,7 +157,7 @@ const AdminAnalytics: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Resolution Rate
                 </p>
                 <p className="text-2xl font-bold">92.3%</p>
@@ -171,7 +171,7 @@ const AdminAnalytics: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Avg Resolution
                 </p>
                 <p className="text-2xl font-bold">2.3 days</p>
@@ -185,7 +185,7 @@ const AdminAnalytics: React.FC = () => {
           <CardContent className="pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm font-medium text-gray-600">
+                <p className="text-sm font-medium text-muted-foreground">
                   Satisfaction
                 </p>
                 <p className="text-2xl font-bold">4.3/5</p>
@@ -310,7 +310,7 @@ const AdminAnalytics: React.FC = () => {
                         {item.timeRange}
                       </span>
                       <Progress value={item.percentage} className="flex-1" />
-                      <span className="text-sm text-gray-600 w-16 text-right">
+                      <span className="text-sm text-muted-foreground">
                         {item.count} cases
                       </span>
                     </div>
@@ -375,17 +375,17 @@ const AdminAnalytics: React.FC = () => {
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-sm">
                         <div>
-                          <p className="text-gray-600">
+                          <p className="text-muted-foreground">
                             Total: {ward.complaints}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-600">
+                          <p className="text-muted-foreground">
                             Resolved: {ward.resolved}
                           </p>
                         </div>
                         <div>
-                          <p className="text-gray-600">Avg: {ward.avgTime}d</p>
+                          <p className="text-muted-foreground">Avg: {ward.avgTime}d</p>
                         </div>
                       </div>
                     </div>

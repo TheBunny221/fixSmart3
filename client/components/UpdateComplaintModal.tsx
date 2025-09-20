@@ -358,11 +358,11 @@ const UpdateComplaintModal: React.FC<UpdateComplaintModalProps> = ({
             )}
           </div>
 
-          <div className="bg-gray-50 rounded-lg p-4">
+          <div className="bg-muted/50 rounded-lg p-4">
             <h3 className="font-medium mb-2">Complaint Summary</h3>
             <div className="grid grid-cols-2 gap-4 text-sm">
-              <div><span className="text-gray-600">Type:</span> {complaint.type.replace("_", " ")}</div>
-              <div><span className="text-gray-600">Area:</span> {complaint.area}</div>
+              <div><span className="text-muted-foreground">Type:</span> {complaint.type.replace("_", " ")}</div>
+              <div><span className="text-muted-foreground">Area:</span> {complaint.area}</div>
               <div><span className="text-gray-600">Current Status:</span> <Badge className={`ml-2 ${getStatusColor(complaint.status)}`}>{complaint.status.replace("_", " ")}</Badge></div>
               <div><span className="text-gray-600">Current Priority:</span> <Badge className={`ml-2 ${getPriorityColor(complaint.priority)}`}>{complaint.priority}</Badge></div>
             </div>

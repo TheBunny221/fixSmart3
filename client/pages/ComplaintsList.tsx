@@ -43,6 +43,7 @@ import ComplaintQuickActions from "../components/ComplaintQuickActions";
 import QuickComplaintModal from "../components/QuickComplaintModal";
 import UpdateComplaintModal from "../components/UpdateComplaintModal";
 import { useGetPublicSystemConfigQuery } from "../store/api/systemConfigApi";
+import { getStatusColor } from "@/utils/statusColors";
 
 const ComplaintsList: React.FC = () => {
   const { user, isAuthenticated } = useAppSelector((state) => state.auth);
@@ -251,52 +252,33 @@ const ComplaintsList: React.FC = () => {
     }
   }, [complaints, cacheComplaintsList]);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "REGISTERED":
-        return "bg-yellow-100 text-yellow-800";
-      case "ASSIGNED":
-        return "bg-blue-100 text-blue-800";
-      case "IN_PROGRESS":
-        return "bg-orange-100 text-orange-800";
-      case "RESOLVED":
-        return "bg-green-100 text-green-800";
-      case "CLOSED":
-        return "bg-gray-100 text-gray-800";
-      case "REOPENED":
-        return "bg-purple-100 text-purple-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
   const getPriorityColor = (priority: string) => {
     switch (priority) {
       case "LOW":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "MEDIUM":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
       case "HIGH":
-        return "bg-orange-100 text-orange-800";
+        return "bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200";
       case "CRITICAL":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
     }
   };
 
   const getSLAColor = (sla: string) => {
     switch (sla) {
       case "ON_TIME":
-        return "bg-green-100 text-green-800";
+        return "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200";
       case "WARNING":
-        return "bg-yellow-100 text-yellow-800";
+        return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200";
       case "OVERDUE":
-        return "bg-red-100 text-red-800";
+        return "bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200";
       case "COMPLETED":
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
       default:
-        return "bg-gray-100 text-gray-800";
+        return "bg-muted text-muted-foreground";
     }
   };
 
@@ -356,10 +338,10 @@ const ComplaintsList: React.FC = () => {
       {/* Header */}
       <div className="flex justify-between items-start">
         <div>
-          <h1 className="text-3xl font-bold text-gray-900">
+          <h1 className="text-3xl font-bold text-foreground">
             {user?.role === "MAINTENANCE_TEAM" ? "My Complaints" : "Complaints"}
           </h1>
-          <p className="text-gray-600">
+          <p className="text-muted-foreground">
             {user?.role === "MAINTENANCE_TEAM"
               ? "View and manage complaints you have submitted"
               : "Manage and track all complaints"}
@@ -383,10 +365,10 @@ const ComplaintsList: React.FC = () => {
       </div>
 
       {/* Filters */}
-      <div className="p-2 bg-gray-50 border rounded-md mb-2">
+      <div className="p-2 bg-muted/50 border rounded-md mb-2">
         <div className="flex flex-wrap items-center gap-2 text-sm">
           <div className="relative flex-1 min-w-[220px]">
-            <Search className="absolute left-2 top-2.5 h-4 w-4 text-gray-400" />
+            <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search by ID, description, or location..."
               value={searchTerm}
@@ -398,13 +380,13 @@ const ComplaintsList: React.FC = () => {
               <button
                 aria-label="Clear search"
                 onClick={() => setSearchTerm("")}
-                className="absolute right-1 top-1.5 h-5 w-5 rounded hover:bg-gray-200 text-gray-600 flex items-center justify-center"
+                className="absolute right-1 top-1.5 h-5 w-5 rounded hover:bg-accent text-muted-foreground flex items-center justify-center"
               >
                 ×
               </button>
             )}
             {searchTerm && (
-              <p className="text-[11px] leading-4 text-gray-500 mt-1">
+              <p className="text-[11px] leading-4 text-muted-foreground mt-1">
                 {searchTerm.match(/^[A-Za-z]/)
                   ? `Searching for complaint ID: ${searchTerm}`
                   : `Searching in descriptions and locations`}
@@ -571,7 +553,7 @@ const ComplaintsList: React.FC = () => {
             </div>
           ) : (
             <>
-              <div className="max-h-[500px] overflow-x-auto overflow-y-auto border rounded-md bg-white shadow-sm p-2">
+              <div className="max-h-[500px] overflow-x-auto overflow-y-auto border rounded-md bg-card shadow-sm p-2">
                 <Table className="min-w-max">
                   <TableHeader>
                     <TableRow>
@@ -764,7 +746,7 @@ const ComplaintsList: React.FC = () => {
               {/* Pagination and records-per-page controls */}
               <div className="flex items-center justify-between mt-4">
                 <div className="flex items-center space-x-2">
-                  <span className="text-sm text-gray-600">Rows per page:</span>
+                  <span className="text-sm text-muted-foreground">Rows per page:</span>
                   <Select
                     value={String(recordsPerPage)}
                     onValueChange={(v) => {
@@ -782,7 +764,7 @@ const ComplaintsList: React.FC = () => {
                       <SelectItem value="100">100</SelectItem>
                     </SelectContent>
                   </Select>
-                  <span className="text-sm text-gray-500">
+                  <span className="text-sm text-muted-foreground">
                     {totalItems === 0
                       ? `Showing 0 of 0`
                       : `Showing ${(currentPage - 1) * recordsPerPage + 1} - ${Math.min(currentPage * recordsPerPage, totalItems)} of ${totalItems}`}

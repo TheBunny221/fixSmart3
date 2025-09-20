@@ -924,9 +924,9 @@ const AdminConfig: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="bg-gradient-to-r from-gray-800 to-gray-900 rounded-lg p-6 text-white">
+      <div className="bg-gradient-to-r from-primary to-primary/80 rounded-lg p-6 text-primary-foreground">
         <h1 className="text-3xl font-bold mb-2">System Configuration</h1>
-        <p className="text-gray-300">
+        <p className="text-primary-foreground/80">
           Manage wards, complaint types, system settings, and administrative
           controls
         </p>
@@ -987,7 +987,7 @@ const AdminConfig: React.FC = () => {
                           </Button>
                           <div>
                             <h3 className="font-medium">{ward.name}</h3>
-                            <p className="text-sm text-gray-600">
+                            <p className="text-sm text-muted-foreground">
                               {ward.description}
                             </p>
                           </div>
@@ -1036,7 +1036,7 @@ const AdminConfig: React.FC = () => {
 
                       {/* Sub-zones */}
                       {expandedWards.has(ward.id) && (
-                        <div className="mt-4 pl-8 border-l-2 border-gray-200">
+                        <div className="mt-4 pl-8 border-l-2 border-border">
                           <div className="flex justify-between items-center mb-3">
                             <h4 className="font-medium text-sm">Sub-Zones</h4>
                             <Button
@@ -1061,13 +1061,13 @@ const AdminConfig: React.FC = () => {
                             {ward.subZones?.map((subZone) => (
                               <div
                                 key={subZone.id}
-                                className="flex items-center justify-between p-2 bg-gray-50 rounded"
+                                className="flex items-center justify-between p-2 bg-muted/50 rounded"
                               >
                                 <div>
                                   <span className="text-sm font-medium">
                                     {subZone.name}
                                   </span>
-                                  <p className="text-xs text-gray-600">
+                                  <p className="text-xs text-muted-foreground">
                                     {subZone.description}
                                   </p>
                                 </div>
@@ -1103,7 +1103,7 @@ const AdminConfig: React.FC = () => {
                                 </div>
                               </div>
                             )) || (
-                              <p className="text-sm text-gray-500">
+                              <p className="text-sm text-muted-foreground">
                                 No sub-zones defined
                               </p>
                             )}
@@ -1250,7 +1250,7 @@ const AdminConfig: React.FC = () => {
                     <TableRow>
                       <TableCell
                         colSpan={6}
-                        className="text-center py-4 text-gray-500"
+                        className="text-center py-4 text-muted-foreground"
                       >
                         No complaint types found. Create one to get started.
                       </TableCell>
@@ -1287,7 +1287,7 @@ const AdminConfig: React.FC = () => {
                         <div className="border rounded-lg p-4" key={s.key}>
                           <div className="mb-2">
                             <h4 className="font-medium">Application Name</h4>
-                            <p className="text-sm text-gray-600">Shown in headers, emails and PDFs.</p>
+                            <p className="text-sm text-muted-foreground">Shown in headers, emails and PDFs.</p>
                           </div>
                           <Input
                             type="text"
@@ -1310,7 +1310,7 @@ const AdminConfig: React.FC = () => {
                           <div className="mb-2 flex items-center justify-between">
                             <div>
                               <h4 className="font-medium">Application Logo</h4>
-                              <p className="text-sm text-gray-600">Use a public URL or upload a file. Uploading will automatically update the URL.</p>
+                              <p className="text-sm text-muted-foreground">Use a public URL or upload a file. Uploading will automatically update the URL.</p>
                             </div>
                             {s.value && (
                               <img src={s.value} alt="Logo" className="h-10 w-10 object-contain border rounded ml-4" onError={(e) => ((e.target as HTMLImageElement).style.display = "none")} />
@@ -1385,7 +1385,7 @@ const AdminConfig: React.FC = () => {
                         <div className="border rounded-lg p-4" key={s.key}>
                           <div className="mb-2">
                             <h4 className="font-medium">Logo Size</h4>
-                            <p className="text-sm text-gray-600">Controls the displayed logo size (small/medium/large).</p>
+                            <p className="text-sm text-muted-foreground">Controls the displayed logo size (small/medium/large).</p>
                           </div>
                           <Select
                             value={s.value}
